@@ -77,6 +77,11 @@ The model takes text input and returns:
 
 - Kaggle Emotion Dataset
 
+## 📷 Screenshots
+![Landing Page](static/landing.png)
+
+![Prediction Page](static/home.png)
+
 ## 📜 License
 This project is open-source. Feel free to modify and reuse it with attribution. ❤️
 
