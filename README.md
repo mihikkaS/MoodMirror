@@ -37,7 +37,7 @@ graph TD;
     B --> C[Text sent to Flask backend];
     C --> D[Model predicts emotion];
     D --> E[Backend returns result];
-    E --> F[Frontend shows emotion + emoji];
+    E --> F[Frontend shows emotion];
     F --> G[Adds to prediction history];
 ```
 ---
