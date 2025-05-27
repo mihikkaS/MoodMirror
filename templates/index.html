@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoodMirror - Text Emotion Classifier</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: #b3e5fc;
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            overflow-y: auto;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.85);
+            margin: 5% auto;
+            width: 50%;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #90caf9;
+            margin-top: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #29b6f6;
+            color: white;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        #history {
+            margin-top: 40px;
+            background: #e1f5fe;
+            padding: 20px;
+            border-radius: 10px;
+            max-height: 400px; /* optional: to add scroll within history block */
+            overflow-y: auto;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 5px 0;
+        }
+
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: floatBubble 20s infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes floatBubble {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-110vh);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="text-align: center; margin-bottom: 20px;">
+        <img src="{{ url_for('static', filename='icon1.png') }}" alt="Mood Icon" style="width: 40px; vertical-align: middle; margin-right: 10px;">
+        <span style="vertical-align: middle;">MoodMirror</span>
+        </h1>
+        <textarea id="inputText" rows="4" placeholder="Type your text here..."></textarea>
+        <button onclick="getEmotion()">Predict Emotion</button>
+        <p id="result"></p>
+
+        <div id="history">
+            <h3>Prediction History:</h3>
+            <ul id="history-list"></ul>
+        </div>
+    </div>
+
+    <!-- Floating background bubbles -->
+    <script>
+        for (let i = 0; i < 30; i++) {
+            const bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+            bubble.style.left = Math.random() * 100 + "vw";
+            bubble.style.animationDuration = (10 + Math.random() * 10) + "s";
+            bubble.style.width = bubble.style.height = (10 + Math.random() * 20) + "px";
+            document.body.appendChild(bubble);
+        }
+    </script>
+
+    <!-- Emotion prediction script -->
+    <script>
+        async function getEmotion() {
+            const text = document.getElementById('inputText').value;
+
+            const response = await fetch('/predict', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            });
+
+            const data = await response.json();
+            const resultText = `Predicted Emotion: ${data.emotion} ${data.emoji}`;
+
+            document.getElementById('result').innerText = resultText;
+
+            // Add to history
+            const historyItem = document.createElement("li");
+            historyItem.textContent = resultText;
+            document.getElementById('history-list').prepend(historyItem);
+        }
+    </script>
+</body>
+</html>

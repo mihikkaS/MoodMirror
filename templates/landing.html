@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to MoodMirror</title>
+  <style>
+    body {
+      background-color: #b3e5fc;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container {
+      background: #ffffffdd;
+      display: inline-block;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      width: 80px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin: 20px 0 10px 0;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #444;
+      margin: 20px 0 30px 0;
+    }
+
+    .get-started {
+      display: inline-block;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      color: white;
+      background-color: #03a9f4;
+      border: none;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .get-started:hover {
+      background-color: #0288d1;
+    }
+
+    /* Floating bubbles */
+    .bubble {
+      position: absolute;
+            bottom: -225px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: floatBubble 20s infinite;
+            z-index: 0;
+            pointer-events: none;
+    }
+
+    @keyframes floatBubble {
+      0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-110vh);
+            }
+      }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="{{ url_for('static', filename='icon1.png') }}" alt="MoodMirror Icon" class="logo">
+    <h1>MoodMirror</h1>
+    <p>&emsp;&emsp;&emsp;Find the mood behind the words &emsp;&emsp;&emsp;</p>
+    <a href="{{ url_for('home') }}" class="get-started">Get Started</a>
+  </div>
+
+  <!-- Floating background bubbles -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const bubble = document.createElement("div");
+      bubble.classList.add("bubble");
+
+      const size = 10 + Math.random() * 20;
+      bubble.style.width = size + "px";
+      bubble.style.height = size + "px";
+      bubble.style.left = Math.random() * 100 + "vw";
+      bubble.style.animationDuration = (8 + Math.random() * 8) + "s";
+      bubble.style.animationDelay = Math.random() * 5 + "s";
+
+      document.body.appendChild(bubble);
+    }
+  </script>
+</body>
+</html>
