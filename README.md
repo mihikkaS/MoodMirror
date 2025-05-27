@@ -1,4 +1,3 @@
-![MoodMirror Banner](static/icon1.png)
 
 # 🎭 MoodMirror
 
